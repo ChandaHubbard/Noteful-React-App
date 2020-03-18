@@ -1,12 +1,13 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, Router, Switch, Route } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import Note from '../Note/Note'
 import CircleButton from '../CircleButton/CircleButton'
 import ApiContext from '../ApiContext'
 import { getNotesForFolder } from '../notes-helper'
 import './NoteListMain.css'
-
+import AddNote from '../AddNote'
+import routes from '../NoteListNav/NoteListNav'
 
 export default class NoteListMain extends React.Component {
   static defaultProps = {
@@ -22,6 +23,7 @@ export default class NoteListMain extends React.Component {
     const { notes=[] } = this.context
     const notesForFolder = getNotesForFolder(notes, folderId)
   return (
+    // <Router>
     <section className='NoteListMain'>
       <ul>
         {notesForFolder.map(note =>
@@ -37,7 +39,7 @@ export default class NoteListMain extends React.Component {
       <div className='NoteListMain__button-container'>
         <CircleButton
           tag={Link}
-          to='/add-note'
+          Link to='/add-note'
           type='button'
           className='NoteListMain__add-note-button'
         >
@@ -45,8 +47,29 @@ export default class NoteListMain extends React.Component {
           <br />
           Note
         </CircleButton>
+        {/* <Switch>
+          {routes.map((route, index) => (
+            <Route
+            key={index}
+            path={route.path}
+            exact={route.exact}
+            children={<route.sidebar />}
+            />
+          ))}
+        </Switch>
+        <Switch>
+          {routes.map((route, index) => (
+            <Route
+            key={index}
+            path={route.path}
+            exact={route.exact}
+            children={<route.main />}
+            />
+          ))}
+        </Switch> */}
       </div>
     </section>
-  )
+    // </Router>
+  );
 }
 }
