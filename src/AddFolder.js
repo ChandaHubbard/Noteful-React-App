@@ -13,32 +13,6 @@ class AddFolder extends Component {
     };
   }
 
-  // componentDidMount() {
-  //     Promise.all([
-  //         fetch(`${config.API_ENDPOINT}/notes`),
-  //         fetch(`${config.API_ENDPOINT}/folders`)
-  //     ])
-  //     .then(([notesRes, foldersRes]) => {
-  //         if(!notesRes.ok)
-  //         return notesRes.json().then(e => Promise.reject(e));
-  //         if(!foldersRes.ok)
-  //         return foldersRes.json().then(e => Promise.reject(e));
-
-  //         return Promise.all([notesRes.json(), foldersRes.json()]);
-  //     })
-  //     .then(([notes, folders]) => {
-  //         this.setState({notes, folders});
-  //     })
-  //     .catch(error => {
-  //         console.error({error});
-  //     });
-  // }
-
-  // handleDeleteNote = noteId => {
-  //     this.setState({
-  //         notes: this.state.notes.filter(note => note.id !== noteId)
-  //     });
-  // };
 
   updateFolderName(folderName) {
     this.setState({ folderName: { value: folderName } });
@@ -71,7 +45,7 @@ class AddFolder extends Component {
   render() {
     return (
       <div className="add_folder_form">
-        <form className="add-folder-form" onSubmit={e => this.handleSubmit(e)}>
+        <form className="add-folder-form" onSubmit={this.handleSubmit}>
           <label htmlFor="name">New Folder Name:</label>
           <input
             type="text"
@@ -79,8 +53,9 @@ class AddFolder extends Component {
             name="foldername"
             id="foldername"
             // ref={this.folderNameInput}
-            value="New Folder"
-            onChange={e => this.updateFolderName(e.target.value)}
+            value={this.state.folderName.value}
+            onChange={e =>
+                this.updateFolderName(e.target.value)}
           />
           <div className="add-folder-submit-button">
             <button type="submit" className="submit_button">
