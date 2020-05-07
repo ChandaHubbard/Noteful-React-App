@@ -1,68 +1,86 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+You're going to build an application called Noteful. This application will be built up over several checkpoints as we first create the design and basic components with routing, and then move onto integrating the API calls. We'll also be building the back-end for this application in the Node curriculum!
 
-## Available Scripts
+To start, create a new create-react-app project called noteful and remove the boilerplate code to have a clean starting point.
 
-In the project directory, you can run:
+This assignment is to build the basic components for 3 routes based off of the wireframes we'll supply below. You don't need to implement any API calls or functionality to manage the notes just yet as we'll get to that in later checkpoints.
 
-### `npm start`
+Requirements
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+There are 3 routes to build: the main route, the dynamic folder route, and a dynamic note route. We'll supply you with 3 wireframes for each of these pages and you'll then need to create the semantic (accessible) HTML for these as well as basic styling.
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+Each route should have a header, main section, and a sidebar section
 
-### `npm test`
+Every route will have the same header section, the app's title should be a link to the main route
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+The state will be supplied below in a JSON object and contains an array of folders and an array of notes
 
-### `npm run build`
+Set the state inside the main App component (we'll use an API call to populate this state in a future checkpoint)
+The main route:
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Should be displayed when the path is /
+The main section will display all of the available notes
+Each note should show its name and modified date
+The sidebar will display a list of folders with none selected
+The dynamic folder route:
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+Should be displayed when the path is /folder/<with-a-folder-id-here>
+The folder-id will reference an id of one of the folders in state
+The main section should display only the notes that are "in" the selected folder
+The sidebar should display the folder list with the selected folder highlighted
+The dynamic note route:
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Should be displayed when the path is /note/<with-a-note-id-here>
+The note-id will reference an id of one of the notes in state
+The main section should display the currently selected notes name, modified date and content
+The sidebar should display the folder of the currently selected note as well as a "back" button.
+This assignment is the biggest one for your React journey so far and should take about 4 hours to complete. If you're having trouble, attend a Q&A session or reach out on Slack for help.
 
-### `npm run eject`
+Dummy data
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Use this dummy-store.js as a file in your project to populate the initial state.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+Wireframes
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+The main route:
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+Wireframe for the main route
 
-## Learn More
+The folder route:
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Wireframe for the folder route
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+The note route:
 
-### Code Splitting
+Wireframe for the note route
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+Hints
 
-### Analyzing the Bundle Size
+Hints for the App component:
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
+Use sets of Route components: one set for the main content and another set for the sidebar. Each set of routes can be configured using the same paths, but different components. For example:
+function Example() {
+  return <>
+    <Sidebar>
+      <Route path='/' component={MainSidebar} />
+      <Route path='/foo' component={FooSidebar} />
+    </Sidebar>
+    <Main>
+      <Route path='/' component={MainMain} />
+      <Route path='/foo' component={FooMain} />
+    </Main>
+  </>
+}
+In order to pass props into components for specific routes, you'll need to use the render prop on Route components in a similar way to when we added programmatic navigation to the bookmarks app. For example:
+<Route
+  path='/foo'
+  render={(routerProps) =>
+    <FooSidebar
+      aFoo={this.state.foos.find(foo => foo.id === routeProps.match.params.foodId)}
+    />
+  }
+/>
+The main route and the folder route could use the same component with a different list of notes passed in as props.
+The folder route:
 
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `npm run build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+Instead of using Link components in the sidebar for each folder, you can use the React-Router NavLink component that will automatically add a className of "active" when appropriate.
+You'll need to filter for the notes that contain a matching folderId to the folder that's selected when deciding which notes to display.
