@@ -4,7 +4,6 @@ import CircleButton from '../CircleButton/CircleButton'
 import ApiContext from '../ApiContext'
 import { findNote, findFolder } from '../notes-helper'
 import './NotePageNav.css'
-import { render } from '@testing-library/react'
 
 export default class NotePageNav extends React.Component {
   static defaultProps = {
@@ -25,10 +24,10 @@ export default class NotePageNav extends React.Component {
     return (
       <div className='NotePageNav'>
         <CircleButton
-        tag='button'
-        role='link'
-        onClick={() => this.props.history.goback()}
-        className='NotePageNav__back-button'
+          tag='button'
+          role='link'
+          onClick={() => this.props.history.goBack()}
+          className='NotePageNav__back-button'
         >
           <FontAwesomeIcon icon='chevron-left' />
           <br />
